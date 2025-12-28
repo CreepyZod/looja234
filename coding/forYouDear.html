@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hearts, Photo & Words</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background: #0b0b0b;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Heart styling */
+        .heart {
+            position: absolute;
+            width: 25px;
+            height: 22px;
+            background: crimson;
+            transform: rotate(-45deg);
+            animation: fadeFloat 5s linear forwards;
+            opacity: 0.8;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 22px;
+            background: crimson;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -12px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 12px;
+            top: 0;
+        }
+
+        @keyframes fadeFloat {
+            from {
+                opacity: 1;
+                transform: scale(1) rotate(-45deg);
+            }
+            to {
+                opacity: 0;
+                transform: scale(1.5) rotate(-45deg);
+            }
+        }
+
+        /* Container for photo + text */
+        .center-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* Photo styling */
+        .photo {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 20px;
+        }
+
+        /* Sentence styling */
+        .sentence {
+            color: white;
+            font-size: 48px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            width: 80vw;
+        }
+
+        .sentence.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="center-box">
+    <!-- Replace image.jpg with your photo -->
+    <img src="123.jpg" alt="Photo" class="photo">
+    <div id="text" class="sentence"></div>
+</div>
+
+<script>
+    const sentences = [
+        "I didn’t plan this.",
+        "But you kept crossing my mind.",
+        "Every ordinary moment felt different.",
+        "Somehow, you became the reason.",
+        "This isn’t perfect, but it’s honest.",
+        "It’s always been you."
+    ];
+
+    const textDiv = document.getElementById("text");
+    let index = 0;
+
+    function showSentence() {
+        textDiv.classList.remove("show");
+
+        setTimeout(() => {
+            textDiv.textContent = sentences[index];
+            textDiv.classList.add("show");
+            index = (index + 1) % sentences.length;
+        }, 500);
+    }
+
+    showSentence();
+    setInterval(showSentence, 3000);
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = Math.random() * window.innerHeight + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 200);
+</script>
+
+</body>
+</html>
